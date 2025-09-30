@@ -1,14 +1,19 @@
 // Get URL parameters for pre-filling
 const urlParams = new URLSearchParams(window.location.search);
 const clientName = urlParams.get('name');
-const currentPhone = urlParams.get('phone');
+const clientPhone = urlParams.get('phone');
+const existingProjectInfo = urlParams.get('projectInfo');
 
 // Pre-fill name and phone if provided
 if (clientName) {
     document.getElementById('clientName').value = decodeURIComponent(clientName);
 }
-if (currentPhone) {
-    document.getElementById('currentPhone').value = decodeURIComponent(currentPhone);
+if (clientPhone) {
+    document.getElementById('clientPhone').value = decodeURIComponent(clientPhone);
+    document.getElementById('currentPhone').value = decodeURIComponent(clientPhone);
+}
+if (existingProjectInfo) {
+    document.getElementById('existingProjectInfo').value = decodeURIComponent(existingProjectInfo);
 }
 
 // Form elements
@@ -181,12 +186,11 @@ phoneNo.addEventListener('change', function() {
 });
 
 phoneNumber.addEventListener('input', checkFormValidity);
-jobDetails.addEventListener('input', checkFormValidity);
 
 // Form validation
 function checkFormValidity() {
     const nameField = document.getElementById('clientName');
-    const jobDetailsField = document.getElementById('jobDetails');
+    const phoneField = document.getElementById('clientPhone');
     const dateField = selectedDateInput;
     const timeField = selectedTimeInput;
     const phoneConfirmRadios = document.querySelectorAll('input[name="phoneConfirm"]');
@@ -197,8 +201,8 @@ function checkFormValidity() {
     // Check name
     if (!nameField.value.trim()) isValid = false;
     
-    // Check job details
-    if (!jobDetailsField.value.trim()) isValid = false;
+    // Check phone
+    if (!phoneField.value.trim()) isValid = false;
     
     // Check date and time
     if (!dateField.value || !timeField.value) isValid = false;
@@ -234,6 +238,8 @@ form.addEventListener('submit', async function(e) {
     // Get form data
     const formData = new FormData(this);
     const name = formData.get('clientName');
+    const autofilledPhone = formData.get('clientPhone');
+    const existingProjectInfoText = formData.get('existingProjectInfo');
     const jobDetailsText = formData.get('jobDetails');
     const date = formData.get('consultationDate');
     const time = formData.get('consultationTime');
@@ -244,8 +250,9 @@ form.addEventListener('submit', async function(e) {
     
     // Prepare webhook data
     const webhookData = {
-        // Customer Information
+        // Customer Information (including autofilled data)
         clientName: name,
+        autofilledPhone: autofilledPhone,
         phoneNumber: finalPhone,
         phoneNumberConfirmed: phoneConfirm === 'yes',
         originalPhoneNumber: document.getElementById('currentPhone').value,
@@ -253,7 +260,8 @@ form.addEventListener('submit', async function(e) {
         // Booking Details
         consultationDate: date,
         consultationTime: time,
-        jobDetails: jobDetailsText,
+        existingProjectInfo: existingProjectInfoText,
+        additionalJobDetails: jobDetailsText,
         
         // Formatted dates for display
         formattedDate: selectedDateObj ? selectedDateObj.toLocaleDateString('en-GB', {
@@ -281,7 +289,8 @@ form.addEventListener('submit', async function(e) {
         // URL parameters (if any)
         urlParams: {
             name: urlParams.get('name'),
-            phone: urlParams.get('phone')
+            phone: urlParams.get('phone'),
+            projectInfo: urlParams.get('projectInfo')
         }
     };
     
@@ -323,14 +332,25 @@ form.addEventListener('submit', async function(e) {
         
         // Create booking details summary
         const bookingDetails = document.getElementById('bookingDetails');
+        let projectInfoHTML = '';
+        if (existingProjectInfoText && existingProjectInfoText.trim()) {
+            projectInfoHTML = `
+            <p><strong>Existing Project Information:</strong></p>
+            <p style="font-style: italic; margin-left: 15px; line-height: 1.4;">${existingProjectInfoText}</p>`;
+        }
+        if (jobDetailsText && jobDetailsText.trim()) {
+            projectInfoHTML += `
+            <p><strong>Additional Project Details:</strong></p>
+            <p style="font-style: italic; margin-left: 15px; line-height: 1.4;">${jobDetailsText}</p>`;
+        }
+        
         bookingDetails.innerHTML = `
             <h4>📋 Your Consultation Details:</h4>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Phone:</strong> ${finalPhone}</p>
             <p><strong>Date:</strong> ${webhookData.formattedDate}</p>
             <p><strong>Time:</strong> ${webhookData.formattedTime}</p>
-            <p><strong>Project Details:</strong></p>
-            <p style="font-style: italic; margin-left: 15px; line-height: 1.4;">${jobDetailsText}</p>
+            ${projectInfoHTML}
             <p style="margin-top: 15px; font-size: 14px; color: #666;"><strong>Confirmation sent at:</strong> ${new Date().toLocaleString('en-GB')}</p>
         `;
         

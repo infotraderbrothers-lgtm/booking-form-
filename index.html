@@ -16,15 +16,22 @@
         <div class="form-section">
             <form id="bookingForm">
                 <div class="form-group">
-                    <label for="clientName">Full Name</label>
-                    <input type="text" id="clientName" name="clientName" required readonly>
+                    <div class="autofill-section">
+                        <div class="autofill-title">Client Information</div>
+                        <label for="clientName">Full Name</label>
+                        <input type="text" id="clientName" name="clientName" required readonly>
+                        <label for="clientPhone" style="margin-top: 15px;">Phone Number</label>
+                        <input type="text" id="clientPhone" name="clientPhone" required readonly>
+                    </div>
                 </div>
                 
                 <div class="form-group">
                     <div class="job-details-section">
-                        <div class="job-details-title">Tell us about your project</div>
-                        <label for="jobDetails">What kind of work do you need done? Please provide as much detail as possible about your project.</label>
-                        <textarea id="jobDetails" name="jobDetails" placeholder="e.g., Kitchen renovation, bathroom tiling, plumbing repair, electrical work, etc. Include any specific requirements, timeframes, or questions you have..." required></textarea>
+                        <div class="job-details-title">Additional Project Details</div>
+                        <label for="existingProjectInfo">Information we already have about your project:</label>
+                        <textarea id="existingProjectInfo" name="existingProjectInfo" placeholder="No existing project information provided..." readonly></textarea>
+                        <label for="jobDetails" style="margin-top: 20px;">Please provide any additional information about your project that will help us prepare for our consultation.</label>
+                        <textarea id="jobDetails" name="jobDetails" placeholder="e.g., Specific materials you prefer, budget range, preferred start date, any challenges or constraints we should know about..."></textarea>
                     </div>
                 </div>
                 

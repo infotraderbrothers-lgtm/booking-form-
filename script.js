@@ -314,52 +314,6 @@ form.addEventListener('submit', async function(e) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        // Format date and time for confirmation message
-        const dateObj = new Date(date);
-        const formattedDate = dateObj.toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'long'
-        });
-        
-        const [hours, minutes] = time.split(':');
-        const timeObj = new Date();
-        timeObj.setHours(parseInt(hours), parseInt(minutes));
-        const formattedTime = timeObj.toLocaleTimeString('en-GB', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
-        
-        // Create personalized confirmation message
-        const confirmationMessage = `Can't wait ${name}, looking forward to our chat on ${formattedDate} at ${formattedTime}. Have a great rest of your day!`;
-        
-        // Update confirmation message
-        document.getElementById('confirmationMessage').textContent = confirmationMessage;
-        
-        // Create booking details summary
-        const bookingDetails = document.getElementById('bookingDetails');
-        let projectInfoHTML = '';
-        if (existingProjectInfoText && existingProjectInfoText.trim()) {
-            projectInfoHTML = `
-            <p><strong>Existing Project Information:</strong></p>
-            <p style="font-style: italic; margin-left: 15px; line-height: 1.4;">${existingProjectInfoText}</p>`;
-        }
-        if (jobDetailsText && jobDetailsText.trim()) {
-            projectInfoHTML += `
-            <p><strong>Additional Project Details:</strong></p>
-            <p style="font-style: italic; margin-left: 15px; line-height: 1.4;">${jobDetailsText}</p>`;
-        }
-        
-        bookingDetails.innerHTML = `
-            <h4>📋 Your Consultation Details:</h4>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Phone:</strong> ${finalPhone}</p>
-            <p><strong>Date:</strong> ${webhookData.formattedDate}</p>
-            <p><strong>Time:</strong> ${webhookData.formattedTime}</p>
-            ${projectInfoHTML}
-            <p style="margin-top: 15px; font-size: 14px; color: #666;"><strong>Confirmation sent at:</strong> ${new Date().toLocaleString('en-GB')}</p>
-        `;
-        
         // Show thank you modal
         document.getElementById('thankYouModal').classList.add('show');
         

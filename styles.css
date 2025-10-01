@@ -561,9 +561,10 @@ textarea {
     border-radius: 20px;
     padding: 40px;
     text-align: center;
-    max-width: 500px;
+    max-width: 450px;
     margin: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 2px solid #bc9c22;
     transform: scale(0.8);
     transition: transform 0.3s ease;
 }
@@ -573,77 +574,53 @@ textarea {
 }
 
 .thank-you-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
-    display: block;
+    width: 70px;
+    height: 70px;
+    background: #bc9c22;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0 auto 25px;
+    box-shadow: 0 8px 25px rgba(188, 156, 34, 0.4);
 }
 
 .thank-you-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 600;
     color: #2c3e50;
-    margin-bottom: 15px;
-}
-
-.thank-you-subtitle {
-    font-size: 18px;
-    font-weight: 400;
-    color: #bc9c22;
     margin-bottom: 20px;
 }
 
 .thank-you-text {
     font-size: 16px;
     color: #4a5568;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     line-height: 1.6;
 }
 
-.confirmation-message {
-    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 25px 0;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(45, 45, 45, 0.3);
-}
-
-.booking-details {
-    background: linear-gradient(135deg, #f8f9fb 0%, #e8ecf4 100%);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    text-align: left;
-}
-
-.booking-details h4 {
-    color: #2c3e50;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.booking-details p {
-    margin: 5px 0;
-    color: #4a5568;
-}
-
 .close-btn {
-    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    background: #bc9c22;
     color: white;
     border: none;
-    padding: 12px 30px;
-    border-radius: 10px;
+    padding: 14px 35px;
+    border-radius: 12px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 25px rgba(188, 156, 34, 0.4);
 }
 
 .close-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(45, 45, 45, 0.4);
+    box-shadow: 0 12px 35px rgba(188, 156, 34, 0.5);
+    background: #a68a1e;
 }
 
 .error-message {
@@ -677,10 +654,15 @@ textarea {
     .thank-you-content {
         padding: 30px 20px;
         margin: 10px;
+        max-width: 90%;
     }
 
     .thank-you-title {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    .thank-you-text {
+        font-size: 15px;
     }
     
     .calendar-dropdown-content {

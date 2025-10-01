@@ -41,19 +41,17 @@ body {
 
 .company-name {
     font-size: 32px;
-    font-weight: 400;
+    font-weight: 700;
     margin-bottom: 8px;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
     position: relative;
     z-index: 1;
+    color: white;
 }
 
 .gold-letter {
-    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
+    color: #bc9c22;
+    font-weight: 700;
 }
 
 .subtitle {
@@ -118,8 +116,8 @@ textarea {
     border-radius: 16px;
     padding: 25px;
     margin-bottom: 30px;
-    border: 1px solid #d4af37;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border: 1px solid #bc9c22;
+    box-shadow: 0 0 20px rgba(188, 156, 34, 0.3);
 }
 
 .autofill-title {
@@ -147,8 +145,8 @@ textarea {
     border-radius: 16px;
     padding: 25px;
     margin-bottom: 30px;
-    border: 1px solid #d4af37;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border: 1px solid #bc9c22;
+    box-shadow: 0 0 20px rgba(188, 156, 34, 0.3);
 }
 
 .job-details-title {
@@ -181,8 +179,8 @@ textarea {
     border-radius: 16px;
     padding: 25px;
     margin-bottom: 30px;
-    border: 1px solid #d4af37;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border: 1px solid #bc9c22;
+    box-shadow: 0 0 20px rgba(188, 156, 34, 0.3);
 }
 
 .calendar-title {
@@ -488,8 +486,8 @@ textarea {
 .submit-btn {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
-    color: #1a1a1a;
+    background: #bc9c22;
+    color: white;
     border: none;
     border-radius: 16px;
     font-size: 18px;
@@ -500,12 +498,13 @@ textarea {
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 8px 25px rgba(188, 156, 34, 0.4);
 }
 
 .submit-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 12px 35px rgba(188, 156, 34, 0.5);
+    background: #a68a1e;
 }
 
 .submit-btn.loading {
@@ -521,7 +520,7 @@ textarea {
     width: 20px;
     height: 20px;
     margin: -10px 0 0 -10px;
-    border: 2px solid #1a1a1a;
+    border: 2px solid white;
     border-radius: 50%;
     border-top-color: transparent;
     animation: spin 1s linear infinite;

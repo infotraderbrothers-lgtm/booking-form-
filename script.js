@@ -9,7 +9,6 @@ if (clientName) {
     document.getElementById('clientName').value = decodeURIComponent(clientName);
 }
 if (clientPhone) {
-    document.getElementById('clientPhone').value = decodeURIComponent(clientPhone);
     document.getElementById('currentPhone').value = decodeURIComponent(clientPhone);
 }
 if (existingProjectInfo) {
@@ -40,6 +39,7 @@ const nextMonthBtn = document.getElementById('nextMonth');
 let currentDate = new Date();
 let selectedDateObj = null;
 const today = new Date();
+today.setHours(0, 0, 0, 0);
 const maxDate = new Date();
 maxDate.setMonth(maxDate.getMonth() + 3);
 
@@ -73,8 +73,10 @@ function renderCalendar() {
         dayElement.textContent = date.getDate();
         
         const isCurrentMonth = date.getMonth() === month;
-        const isToday = date.toDateString() === today.toDateString();
-        const isPastDate = date < today.setHours(0, 0, 0, 0);
+        const isToday = date.toDateString() === new Date().toDateString();
+        const todayComparison = new Date();
+        todayComparison.setHours(0, 0, 0, 0);
+        const isPastDate = date < todayComparison;
         const isFutureLimit = date > maxDate;
         const isWeekend = date.getDay() === 0 || date.getDay() === 6;
         const isSelected = selectedDateObj && date.toDateString() === selectedDateObj.toDateString();
@@ -103,8 +105,9 @@ function renderCalendar() {
     // Update navigation buttons
     const prevMonth = new Date(year, month - 1, 1);
     const nextMonth = new Date(year, month + 1, 1);
+    const todayMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
     
-    prevMonthBtn.disabled = prevMonth < new Date(today.getFullYear(), today.getMonth(), 1);
+    prevMonthBtn.disabled = prevMonth < todayMonth;
     nextMonthBtn.disabled = nextMonth > maxDate;
 }
 
@@ -136,7 +139,10 @@ function closeCalendar() {
 }
 
 // Calendar event listeners
-calendarInput.addEventListener('click', openCalendar);
+calendarInput.addEventListener('click', function(e) {
+    e.preventDefault();
+    openCalendar();
+});
 
 prevMonthBtn.addEventListener('click', () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
@@ -190,7 +196,7 @@ phoneNumber.addEventListener('input', checkFormValidity);
 // Form validation
 function checkFormValidity() {
     const nameField = document.getElementById('clientName');
-    const phoneField = document.getElementById('clientPhone');
+    const currentPhoneField = document.getElementById('currentPhone');
     const dateField = selectedDateInput;
     const timeField = selectedTimeInput;
     const phoneConfirmRadios = document.querySelectorAll('input[name="phoneConfirm"]');
@@ -201,8 +207,8 @@ function checkFormValidity() {
     // Check name
     if (!nameField.value.trim()) isValid = false;
     
-    // Check phone
-    if (!phoneField.value.trim()) isValid = false;
+    // Check current phone (from URL or manually entered)
+    if (!currentPhoneField.value.trim()) isValid = false;
     
     // Check date and time
     if (!dateField.value || !timeField.value) isValid = false;
@@ -238,7 +244,7 @@ form.addEventListener('submit', async function(e) {
     // Get form data
     const formData = new FormData(this);
     const name = formData.get('clientName');
-    const autofilledPhone = formData.get('clientPhone');
+    const autofilledPhone = formData.get('currentPhone');
     const existingProjectInfoText = formData.get('existingProjectInfo');
     const jobDetailsText = formData.get('jobDetails');
     const date = formData.get('consultationDate');

@@ -23,6 +23,7 @@ const phoneYes = document.getElementById('phoneYes');
 const phoneNo = document.getElementById('phoneNo');
 const phoneNumber = document.getElementById('phoneNumber');
 const jobDetails = document.getElementById('jobDetails');
+const clientAddress = document.getElementById('clientAddress');
 const timeSlots = document.querySelectorAll('.time-slot');
 const selectedTimeInput = document.getElementById('selectedTime');
 const selectedDateInput = document.getElementById('selectedDate');
@@ -192,10 +193,12 @@ phoneNo.addEventListener('change', function() {
 });
 
 phoneNumber.addEventListener('input', checkFormValidity);
+clientAddress.addEventListener('input', checkFormValidity);
 
 // Form validation
 function checkFormValidity() {
     const nameField = document.getElementById('clientName');
+    const addressField = document.getElementById('clientAddress');
     const currentPhoneField = document.getElementById('currentPhone');
     const dateField = selectedDateInput;
     const timeField = selectedTimeInput;
@@ -206,6 +209,9 @@ function checkFormValidity() {
     
     // Check name
     if (!nameField.value.trim()) isValid = false;
+    
+    // Check address
+    if (!addressField.value.trim()) isValid = false;
     
     // Check current phone (from URL or manually entered)
     if (!currentPhoneField.value.trim()) isValid = false;
@@ -244,6 +250,7 @@ form.addEventListener('submit', async function(e) {
     // Get form data
     const formData = new FormData(this);
     const name = formData.get('clientName');
+    const address = formData.get('clientAddress');
     const autofilledPhone = formData.get('currentPhone');
     const existingProjectInfoText = formData.get('existingProjectInfo');
     const jobDetailsText = formData.get('jobDetails');
@@ -258,6 +265,7 @@ form.addEventListener('submit', async function(e) {
     const webhookData = {
         // Customer Information (including autofilled data)
         clientName: name,
+        clientAddress: address,
         autofilledPhone: autofilledPhone,
         phoneNumber: finalPhone,
         phoneNumberConfirmed: phoneConfirm === 'yes',
